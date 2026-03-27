@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUX JEWELLERYZ | Shopping Bag</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #D4AF37; --orange: #FF9800; --bg: #050505; }
+        body { background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 100px; }
+        
+        header { display: flex; align-items: center; padding: 20px; background: #0a0a0a; gap: 20px; border-bottom: 1px solid #1a1a1a; }
+        .header-title { font-size: 18px; font-weight: 700; letter-spacing: 1px; }
+
+        .section-label { padding: 20px 20px 10px 20px; color: #666; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
+        
+        /* CART ITEM */
+        #cart-list { min-height: 100px; }
+        .cart-item { background: #111; margin: 0 15px 15px 15px; padding: 15px; border-radius: 10px; border: 1px solid #1a1a1a; display: flex; flex-direction: column; }
+        .item-main { display: flex; gap: 15px; margin-bottom: 15px; }
+        .item-img { width: 90px; height: 90px; border-radius: 6px; object-fit: cover; }
+        .item-info { flex: 1; }
+        .item-info h2 { font-size: 14px; margin: 0 0 5px 0; color: #eee; font-weight: 500; }
+        .item-info .price { color: var(--gold); font-weight: 700; font-size: 18px; }
+        .lux-express { color: var(--orange); font-size: 10px; font-weight: 800; margin-top: 8px; display: block; letter-spacing: 1px; }
+        
+        .item-actions { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1a1a1a; padding-top: 15px; }
+        .remove-btn { color: #888; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
+        .remove-btn i { color: #ff4444; margin-right: 5px; }
+        .qty-control { display: flex; align-items: center; gap: 12px; background: #222; border-radius: 4px; padding: 5px 10px; }
+        .qty-btn { background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; }
+        .qty-num { font-weight: 700; font-size: 14px; min-width: 20px; text-align: center; }
+
+        /* EMPTY STATE */
+        .empty-cart { text-align: center; padding: 50px 20px; color: #444; }
+        .empty-cart i { font-size: 60px; margin-bottom: 20px; }
+
+        /* RECENTLY VIEWED */
+        .recent-scroll { display: flex; gap: 15px; padding: 0 15px; overflow-x: auto; scrollbar-width: none; }
+        .recent-card { min-width: 140px; background: #111; padding: 12px; border-radius: 8px; border: 1px solid #1a1a1a; }
+        .recent-card img { width: 100%; height: 90px; object-fit: cover; border-radius: 4px; margin-bottom: 8px; }
+        .recent-card p { font-size: 11px; margin: 0 0 5px 0; color: #bbb; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .recent-card .price { font-size: 12px; color: var(--gold); font-weight: 700; }
+
+        /* FOOTER */
+        footer { position: fixed; bottom: 0; width: 100%; background: #0a0a0a; display: flex; padding: 12px 15px; box-sizing: border-box; gap: 12px; border-top: 1px solid #222; }
+        .checkout-btn { flex: 1; background: var(--orange); color: #fff; border: none; border-radius: 6px; font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; height: 55px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <i class="fas fa-arrow-left" onclick="window.location.href='index.html'"></i>
+        <div class="header-title">My Shopping Bag</div>
+    </header>
+
+    <div class="section-label">Bag Items</div>
+    <div id="cart-list">
+        <!-- Cart Items Injected Here -->
+    </div>
+
+    <div class="section-label">Recently Viewed</div>
+    <div class="recent-scroll">
+        <div class="recent-card">
+            <img src="https://images.unsplash.com/photo-1599643478524-fb66f7ca265b?w=200">
+            <p>Sovereign Band</p>
+            <div class="price">UGX 280,000</div>
+        </div>
+        <div class="recent-card">
+            <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=200">
+            <p>Chrono Elite</p>
+            <div class="price">UGX 1,500,000</div>
+        </div>
+        <div class="recent-card">
+            <img src="https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=200">
+            <p>Pearl Drops</p>
+            <div class="price">UGX 450,000</div>
+        </div>
+    </div>
+
+    <footer>
+        <button class="checkout-btn" id="checkout-btn" onclick="window.location.href='checkout.html'">Checkout (UGX 0)</button>
+    </footer>
+
+    <script>
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem('lux_cart')) || [];
+            const list = document.getElementById('cart-list');
+            let total = 0;
+
+            if (cart.length === 0) {
+                list.innerHTML = `<div class="empty-cart"><i class="fas fa-shopping-bag"></i><br>Your bag is empty</div>`;
+                document.getElementById('checkout-btn').innerText = `Bag is Empty`;
+                document.getElementById('checkout-btn').disabled = true;
+                document.getElementById('checkout-btn').style.opacity = "0.3";
+                return;
+            }
+
+            list.innerHTML = cart.map((item, index) => {
+                total += item.price;
+                return `
+                    <div class="cart-item">
+                        <div class="item-main">
+                            <img src="${item.img}" class="item-img">
+                            <div class="item-info">
+                                <h2>${item.displayName}</h2>
+                                <div class="price">UGX ${item.price.toLocaleString()}</div>
+                                <span class="lux-express">LUX EXPRESS <i class="fas fa-plane"></i></span>
+                            </div>
+                        </div>
+                        <div class="item-actions">
+                            <div class="remove-btn" onclick="removeItem(${index})"><i class="fas fa-trash-alt"></i> REMOVE</div>
+                            <div class="qty-control">
+                                <button class="qty-btn">-</button>
+                                <span class="qty-num">1</span>
+                                <button class="qty-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('checkout-btn').innerText = `Checkout (UGX ${total.toLocaleString()})`;
+            localStorage.setItem('lux_cart_total', total);
+        }
+
+        window.removeItem = (index) => {
+            let cart = JSON.parse(localStorage.getItem('lux_cart'));
+            cart.splice(index, 1);
+            localStorage.setItem('lux_cart', JSON.stringify(cart));
+            renderCart();
+        };
+
+        renderCart();
+    </script>
+</body>
+</html>
