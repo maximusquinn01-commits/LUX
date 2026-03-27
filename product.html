@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUX | Fine Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #D4AF37; --orange: #FF9800; --bg: #050505; --card: #0a0a0a; --border: rgba(212, 175, 55, 0.2); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; padding-bottom: 120px; overflow-x: hidden; }
+        
+        /* HEADER */
+        header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(10,10,10,0.9); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
+        .back-btn { font-size: 20px; cursor: pointer; }
+        .header-logo { height: 35px; }
+
+        /* PRODUCT HERO */
+        .product-hero { width: 100%; height: 450px; background: #000; overflow: hidden; position: relative; border-bottom: 1px solid var(--border); }
+        .product-hero img { width: 100%; height: 100%; object-fit: cover; }
+        .lux-tag { position: absolute; top: 20px; left: 20px; background: var(--gold); color: #000; font-size: 10px; font-weight: 900; padding: 6px 12px; border-radius: 2px; letter-spacing: 2px; }
+
+        /* MAIN DETAILS */
+        .main-content { padding: 30px 20px; }
+        .cat-label { color: var(--gold); font-size: 11px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; display: block; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 30px; line-height: 1.2; margin-bottom: 15px; }
+        
+        .price-box { margin-bottom: 30px; }
+        .price-now { color: var(--gold); font-size: 32px; font-weight: 700; display: block; }
+        .shipping-note { font-size: 12px; color: #555; margin-top: 5px; }
+
+        /* MATERIAL SELECTOR */
+        .selector-title { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: block; font-weight: 700; }
+        .selection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 40px; }
+        .grid-item { background: #0a0a0a; border: 1px solid #222; padding: 18px 5px; text-align: center; border-radius: 6px; font-size: 11px; cursor: pointer; transition: 0.3s; color: #999; }
+        .grid-item.active { border-color: var(--gold); color: var(--gold); background: rgba(212, 175, 55, 0.05); font-weight: 600; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+
+        /* DESCRIPTION & SPECS */
+        .info-section { border-top: 1px solid #111; padding-top: 30px; margin-top: 20px; }
+        .info-section h3 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 15px; color: var(--gold); font-style: italic; }
+        .info-section p { font-size: 14px; color: #999; line-height: 1.8; margin-bottom: 25px; }
+        
+        .spec-table { margin-bottom: 30px; }
+        .spec-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #111; font-size: 13px; }
+        .spec-label { color: #444; font-weight: 600; text-transform: uppercase; font-size: 11px; }
+
+        /* STICKY FOOTER */
+        .footer-nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0a; display: flex; padding: 15px; box-sizing: border-box; gap: 12px; border-top: 1px solid #222; z-index: 1000; }
+        .call-btn { width: 60px; height: 60px; border: 1px solid var(--orange); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--orange); font-size: 22px; text-decoration: none; }
+        .bag-btn { flex: 1; background: var(--orange); color: #fff; border: none; border-radius: 8px; font-weight: 700; font-size: 16px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <i class="fas fa-arrow-left back-btn" onclick="window.location.href='index.html'"></i>
+        <img src="logo.png" class="header-logo" alt="LUX" onerror="this.style.display='none'">
+        <div onclick="window.location.href='cart.html'"><i class="fas fa-shopping-bag" style="font-size:20px;"></i></div>
+    </header>
+
+    <div class="product-hero">
+        <span class="lux-tag">LUXURY PIECE</span>
+        <img id="hero-img" src="">
+    </div>
+
+    <div class="main-content">
+        <span class="cat-label">Exquisite Collection</span>
+        <h1 id="hero-name">Product Name</h1>
+        
+        <div class="price-box">
+            <span class="price-now" id="hero-price">UGX 0</span>
+            <span class="shipping-note"><i class="fas fa-truck"></i> Cash on Delivery available</span>
+        </div>
+
+        <span class="selector-title">Select Premium Material</span>
+        <div class="selection-grid">
+            <div class="grid-item active" onclick="setMat(this)">18k Gold</div>
+            <div class="grid-item" onclick="setMat(this)">Platinum</div>
+            <div class="grid-item" onclick="setMat(this)">24k Pure</div>
+            <div class="grid-item" onclick="setMat(this)">Rose Gold</div>
+            <div class="grid-item" onclick="setMat(this)">Silver 925</div>
+            <div class="grid-item" onclick="setMat(this)">Titanium</div>
+        </div>
+
+        <div class="info-section">
+            <h3>The Art of Luxury</h3>
+            <p>Every piece at LUX JEWELLERYZ is handcrafted to tell a story of elegance. Using only ethically sourced materials, this design ensures a breathtaking sparkle and a lifetime of durability.</p>
+            
+            <div class="spec-table">
+                <div class="spec-row"><span class="spec-label">Clarity</span><span>VVS1 High Grade</span></div>
+                <div class="spec-row"><span class="spec-label">Weight</span><span>14.5 Grams</span></div>
+                <div class="spec-row"><span class="spec-label">Warranty</span><span>2 Year International</span></div>
+                <div class="spec-row"><span class="spec-label">Delivery</span><span>Cash on Delivery</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <a href="tel:+256700000000" class="call-btn"><i class="fas fa-phone-alt"></i></a>
+        <button class="bag-btn" id="add-to-cart-btn" onclick="addToBag()">Add to Bag</button>
+    </div>
+
+    <script>
+        const item = JSON.parse(localStorage.getItem('selectedProduct'));
+        let currentMaterial = "18k Gold";
+
+        if(item) {
+            const img = document.getElementById('hero-img');
+            img.src = item.localImg;
+            img.onerror = () => { img.src = item.webFallback; };
+            document.getElementById('hero-name').innerText = item.displayName;
+            document.getElementById('hero-price').innerText = "UGX " + item.price.toLocaleString();
+        }
+
+        function setMat(el) {
+            document.querySelectorAll('.grid-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+            currentMaterial = el.innerText;
+        }
+
+        function addToBag() {
+            let cart = JSON.parse(localStorage.getItem('lux_cart')) || [];
+            item.selectedMaterial = currentMaterial;
+            item.quantity = 1;
+            cart.push(item);
+            localStorage.setItem('lux_cart', JSON.stringify(cart));
+            
+            const btn = document.getElementById('add-to-cart-btn');
+            btn.innerText = "Added to Bag!";
+            btn.style.background = "var(--gold)";
+            setTimeout(() => { window.location.href = 'cart.html'; }, 800);
+        }
+    </script>
+</body>
+</html>
